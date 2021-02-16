@@ -1,0 +1,4 @@
+name = "CitationGraph"
+uuid = "b7647c63-35bb-4387-bfec-92e2e0951e9a"
+authors = ["Junfeng Wu <wujunfeng1@gmail.com>"]
+version = "0.1.0"
