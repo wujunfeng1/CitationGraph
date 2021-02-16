@@ -2,8 +2,9 @@
 
 This is a package for saving and loading citation graphs.
 
-Examples:
+### Examples:
 
+```
 using CitationGraph
 
 # Load citation graph from csv data. 
@@ -43,5 +44,5 @@ citationGraph.nodes[citeID] = TCitationNode(citeID, citeYear, citeTitle, String[
 push!(node.cites, citeID)
 # and like this:
 saveCitationGraph(".", "ijcai", citationGraph)
-
+```
 
