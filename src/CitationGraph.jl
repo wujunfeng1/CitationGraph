@@ -1,6 +1,6 @@
-module CitationGraph
+module CitationGraphs
 
-export TCitationNode, TCitationGraph, loadCitationGraph, saveCitationGraph
+export CitationNode, CitationGraph, loadCitationGraph, saveCitationGraph
 
 # ===========================================================================================
 # struct CitationNode 
@@ -19,7 +19,7 @@ export TCitationNode, TCitationGraph, loadCitationGraph, saveCitationGraph
 #         Many new papers with refs don't have refs listed in MAG.
 #   cites: The citations to this paper from other papers (also collected from MAG).
 #         Please note that this field is as inaccurate as refs due to the same reason.
-struct TCitationNode
+struct CitationNode
     id::Int
     year::Int
     title::String
@@ -37,8 +37,8 @@ end
 #   nodes: The node of struct CitationNode stored in a dictionary with key = id  
 #   toBeAnalyzed: The list of nodes to be analyzed. In ijcai_clustering dataset, these nodes 
 #                 are those published in IJCAI. 
-struct TCitationGraph
-    nodes::Dict{Int, TCitationNode}
+struct CitationGraph
+    nodes::Dict{Int, CitationNode}
     toBeAnalyzed::Vector{Int}
 end
 
@@ -118,10 +118,10 @@ end
 #           ijcai-citation-graph-nodes.csv is ijcai.
 # output:
 #    The citation graph represented by the three files. 
-function loadCitationGraph(path::String, prefix::String)::TCitationGraph
+function loadCitationGraph(path::String, prefix::String)::CitationGraph
     # ---------------------------------------------------------------------------------------
     # step 1: prepare the data structure of the result
-    result = TCitationGraph(Dict{Int,TCitationNode}(),Int[])
+    result = CitationGraph(Dict{Int,CitationNode}(),Int[])
 
     # ---------------------------------------------------------------------------------------
     # step 2: assemble the file names for nodes, edges, and labels
@@ -146,8 +146,8 @@ function loadCitationGraph(path::String, prefix::String)::TCitationGraph
         id = parse(Int, columns[1])
         toBeAnalyzed = parse(Bool, columns[2])
         year = parse(Int, columns[3])
-        title = replace(columns[4], "[comma]"=>",")
-        result.nodes[id] = TCitationNode(id,year,title,String[],Int[],Int[])
+        title = replace(tidyTitle(columns[4]), "[comma]"=>",")
+        result.nodes[id] = CitationNode(id,year,title,String[],Int[],Int[])
         if toBeAnalyzed
             push!(result.toBeAnalyzed, id)
         end
@@ -214,7 +214,7 @@ end
 #   citationGraph: The citation graph represented by the three files.
 # output:
 #   nothing  
-function saveCitationGraph(path::String, prefix::String, citationGraph::TCitationGraph)
+function saveCitationGraph(path::String, prefix::String, citationGraph::CitationGraph)
     # ---------------------------------------------------------------------------------------
     # step 1: assemble the file names for nodes, edges, and labels
     fileNameOfNodes = "$path/$prefix-citation-graph-nodes.csv"

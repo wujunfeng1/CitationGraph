@@ -1,11 +1,11 @@
-# CitationGraph
+# CitationGraphs
 
 This is a package for saving and loading citation graphs.
 
 ### Examples:
 
 ```
-using CitationGraph
+using CitationGraphs
 
 # Load citation graph from csv data. 
 # The csv data are stored in three csv files:
@@ -20,14 +20,14 @@ citationGraph = loadCitationGraph(".", "ijcai")
 # The return value of the function call above, i.e., citationGraph, is of the
 # following type:
 # 
-# struct TCitationGraph
-#     nodes::Dict{Int, TCitationNode}
+# struct CitationGraph
+#     nodes::Dict{Int, CitationNode}
 #     toBeAnalyzed::Vector{Int}
 # end
 # 
 # where the node type is defined as:
 # 
-# struct TCitationNode
+# struct CitationNode
 #     id::Int
 #     year::Int
 #     title::String
@@ -39,7 +39,7 @@ citationGraph = loadCitationGraph(".", "ijcai")
 # Therefore, to access the data in citationGraph, we could do it like this:
 node = citationGraph.nodes[id]
 # like this:
-citationGraph.nodes[citeID] = TCitationNode(citeID, citeYear, citeTitle, String[], Int[], Int[])
+citationGraph.nodes[citeID] = CitationNode(citeID, citeYear, citeTitle, String[], Int[], Int[])
 # like this:
 push!(node.cites, citeID)
 # and like this:
