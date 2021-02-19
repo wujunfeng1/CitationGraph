@@ -57,7 +57,7 @@ end
 #   title: The String (text) of a title. 
 # output:
 #   A string of the tidied-up title.
-function tidyTitle(title::String)::String
+function tidyTitle(title::Union{String,SubString{String}})::String
     # ---------------------------------------------------------------------------------------
     # step 1: remove the spaces at the head and the tail
     result = title
